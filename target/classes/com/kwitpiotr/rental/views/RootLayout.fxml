@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kwitpiotr.rental.views.RootController">
+   <children>
+      <TabPane prefHeight="400.0" prefWidth="366.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="FILMY">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="movieTable" prefHeight="215.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <columns>
+                            <TableColumn fx:id="titleColumn" prefWidth="108.0" text="Tytuł" />
+                            <TableColumn fx:id="availableColumn" prefWidth="91.0" text="Dostępność" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="KLIENCI">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="clientTable" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <columns>
+                            <TableColumn fx:id="nameColumn" prefWidth="103.0" text="Imię" />
+                            <TableColumn fx:id="lastNameColumn" prefWidth="96.0" text="Nazwisko" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+      <AnchorPane prefHeight="400.0" prefWidth="500.0" />
+      <ButtonBar prefHeight="400.0" prefWidth="45.0">
+        <buttons>
+          <Button mnemonicParsing="false" onAction="#handleDeleteClient" text="Usuń" />
+            <Button mnemonicParsing="false" onAction="#handleEditCliet" text="Edytuj" />
+            <Button mnemonicParsing="false" onAction="#handleNewClient" text="Nowy" />
+        </buttons>
+      </ButtonBar>
+   </children>
+</HBox>
