@@ -26,7 +26,7 @@ public class ClientDetailsController {
 			nameLabel.setText(client.getName());
 			lastNameLabel.setText(client.getLastName());
 			birthDateLabel.setText(DateFormatUtil.format(client.getBirthDate()));
-			peselLabel.setText(Integer.toString(client.getPesel()));
+			peselLabel.setText(Long.toString(client.getPesel()));
 		}else{
 			nameLabel.setText("");
 			lastNameLabel.setText("");

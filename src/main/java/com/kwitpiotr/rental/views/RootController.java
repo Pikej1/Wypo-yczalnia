@@ -40,6 +40,8 @@ public class RootController {
 	@FXML
 	private TableColumn<Rent, LocalDate> startDateColumn;
 	
+	private int selectedTab;
+	
 	/**
 	 * Contructor
 	 */
@@ -47,6 +49,8 @@ public class RootController {
 	
 	@FXML
 	private void initialize(){
+		selectedTab = 1;
+		
 		titleColumn.setCellValueFactory(cellData -> cellData.getValue().titleProperty());
 		availableColumn.setCellValueFactory(cellData -> cellData.getValue().genreProperty());
 		
@@ -117,6 +121,63 @@ public class RootController {
 		}
 	}
 	
+	@FXML
+	private void handleNewMovie(){
+		Movie newMovie = new Movie();
+		boolean okClicked = mainApp.showMovieEditDialog(newMovie);
+		if(okClicked){
+			mainApp.getMovieRep().add(newMovie);
+		}
+	}
+	
+	@FXML
+	private void handleEditMovie(){
+		Movie selectedMovie = movieTable.getSelectionModel().getSelectedItem();
+		if(selectedMovie != null){
+			boolean okClicked = mainApp.showMovieEditDialog(selectedMovie);
+			if(okClicked){
+				showMovieDetails(selectedMovie);
+			}
+		}else{
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.initOwner(mainApp.getPrimaryStage());
+			alert.setTitle("Nie wybrano żadnej pozycji z listy");
+			alert.setHeaderText("Nie wybrano filmu");
+			alert.setContentText("Wybierz film z tabeli 'Filmy'.");
+			
+			alert.showAndWait();
+		}
+	}
+	
+	@FXML
+	private void handleNew(){
+		switch(selectedTab){
+			case 1:
+				handleNewMovie();
+				break;
+			case 2:
+				handleNewClient();
+				break;
+			case 3:
+				handleNewMovie();
+				break;
+		}
+	}
+	
+	@FXML void handleEdit(){
+		switch(selectedTab){
+		case 1:
+			handleEditMovie();
+			break;
+		case 2:
+			handleEditCliet();
+			break;
+		case 3:
+			handleNewMovie();
+			break;
+		}
+	}
+	
 	private void showMovieDetails(Movie movie){
 		if(movie != null){
 			mainApp.showMovieDetails(movie);
@@ -133,6 +194,19 @@ public class RootController {
 		if(rent != null){
 			mainApp.showRentDetails(rent);
 		}
+	}
+	
+	@FXML
+	private void selectMovieTable(){
+		selectedTab = 1;
+	}
+	@FXML
+	private void selectClientTable(){
+		selectedTab = 2;
+	}
+	@FXML
+	private void selectRentTab(){
+		selectedTab = 3;
 	}
 	
 	public void setMainApp(MainApp mainApp){

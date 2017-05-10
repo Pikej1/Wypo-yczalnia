@@ -1,54 +1,40 @@
 package com.kwitpiotr.rental.repositories;
 
-import java.util.ArrayList;
+import org.omg.CosNaming.IstringHelper;
 
-/*public class MovieRepository {
-	private ArrayList<Movie> movieRep;
-	
+import com.kwitpiotr.rental.model.Movie;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+public class MovieRepository {
+	private ObservableList<Movie> movieRepository;// = FXCollections.observableArrayList();
+
 	public MovieRepository(){
-		movieRep = new ArrayList<Movie>();
+		movieRepository = FXCollections.observableArrayList();
+		movieRepository.add(new Movie("Matrix", 1999, "Sci-fi/action"));
+    	movieRepository.add(new Movie("Schrek",2001, "Comedy"));
+    	movieRepository.add(new Movie("Fightclub", 1999, "Thriller"));
+    	Movie movie = new Movie("Gwiezdne Wojny: Część IV - Nowa nadzieja", 1977, "Sci-Fi");
+    	//movie.setRented(true);
+    	movieRepository.add(movie);
 	}
 	
-	public void addMovie(Movie movie){
-		if(!ifExist(movie.getName())){
-			movieRep.add(movie);
-		}else{
-			System.out.println("Podany film już istnieje!");
-		}
+	public void add(Movie movie){
+		movieRepository.add(movie);
 	}
 	
-	public boolean ifExist(String name){
-		for(Movie movie: movieRep){
-			if(movie.getName().equals(name))
-				return true;
-		}
-		return false;
+	public ObservableList<Movie> getRepository(){
+		return movieRepository;
 	}
 	
-	public void printAll(){
-		for(Movie movie: movieRep){
-			System.out.println(movie.toString());
-			}
-	}
-	
-	public void printFreeOnes(){
-		System.out.println("Dostępne filmy:");
-		for(Movie movie: movieRep){
-			if(!movie.isRented())
-				System.out.println(movie.toString());
-		}
-	}
-	
-	public Movie findByName(String name){
-		for(Movie movie: movieRep){
-			if(movie.getName().equals(name)){
-				return movie;
+	public ObservableList<Movie> getAvaiable(){
+		ObservableList<Movie> avaiable = FXCollections.observableArrayList();
+		for(Movie movie: movieRepository){
+			if(!movie.isRented()){
+				avaiable.add(movie);
 			}
 		}
-		return null;
+		return avaiable;
 	}
-	
-	public ArrayList<Movie> getMovieRepository(){
-		return movieRep;
-	}
-}*/
+}

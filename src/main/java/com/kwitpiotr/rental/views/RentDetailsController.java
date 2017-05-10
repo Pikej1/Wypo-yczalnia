@@ -1,6 +1,5 @@
 package com.kwitpiotr.rental.views;
 
-import com.kwitpiotr.rental.model.Movie;
 import com.kwitpiotr.rental.model.Rent;
 import com.kwitpiotr.rental.util.DateFormatUtil;
 

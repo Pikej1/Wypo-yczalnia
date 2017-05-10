@@ -39,7 +39,7 @@ public class ClientEditDialogController {
         	lastNameField.setText(client.getLastName());
         	birthDateField.setText(DateFormatUtil.format(client.getBirthDate()));
         	birthDateField.setPromptText("dd-MM-yyyy");
-        	peselField.setText(Integer.toString(client.getPesel()));
+        	peselField.setText(Long.toString(client.getPesel()));
     	}else{
         	nameField.setText("");
         	lastNameField.setText("");
@@ -55,7 +55,7 @@ public class ClientEditDialogController {
     		client.setName(nameField.getText());
     		client.setLastName(lastNameField.getText());
     		client.setBirthDate(DateFormatUtil.parse(birthDateField.getText()));
-    		client.setPesel(Integer.parseInt(peselField.getText()));
+    		client.setPesel(Long.parseLong(peselField.getText()));
     		
     		confirmed = true;
     		dialogStage.close();
@@ -83,12 +83,12 @@ public class ClientEditDialogController {
     			errorMessage += "Wypełnij pole 'data urodzenia' urzywając formatu dd-MM-yyyy.";
     		}
     	}
-    	if(peselField.getText() == null || peselField.getText().length() == 0){
+    	if(peselField.getText() == null || peselField.getText().length() != 11){
     		errorMessage += "Podano nieprawidłowy PESEL";
     	}else{
     		//try to parse PESEL into Integer
     		try{
-    			Integer.parseInt(peselField.getText());
+    			Long.parseLong(peselField.getText());
     		}catch(NumberFormatException e){
     			errorMessage += "PESEL musi składać się wyłącznie z cyfr.\n";
     		}

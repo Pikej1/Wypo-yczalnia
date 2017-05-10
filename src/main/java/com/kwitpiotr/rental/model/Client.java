@@ -2,9 +2,9 @@ package com.kwitpiotr.rental.model;
 
 import java.time.LocalDate;
 
-import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.LongProperty;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -13,7 +13,7 @@ public class Client {
 	private StringProperty name;
 	private StringProperty lastName;
 	private ObjectProperty<LocalDate> birthDate;
-	private IntegerProperty pesel;
+	private LongProperty pesel;
 	
 	
 	public Client(){
@@ -24,7 +24,7 @@ public class Client {
 		this.name = new SimpleStringProperty(name);
 		this.lastName = new SimpleStringProperty(lastName);
 		this.birthDate = new SimpleObjectProperty<LocalDate>(birthDate);
-		this.pesel = new SimpleIntegerProperty(pesel);
+		this.pesel = new SimpleLongProperty(pesel);
 	}
 
 	public String getName() {
@@ -63,15 +63,15 @@ public class Client {
 		return birthDate;
 	}
 
-	public int getPesel() {
+	public long getPesel() {
 		return pesel.get();
 	}
 
-	public void setPesel(int pesel) {
+	public void setPesel(long pesel) {
 		this.pesel.set(pesel);
 	}
 	
-	public IntegerProperty peselProperty(){
+	public LongProperty peselProperty(){
 		return pesel;
 	}
 	
