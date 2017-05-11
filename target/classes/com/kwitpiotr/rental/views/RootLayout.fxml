@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
@@ -10,18 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kwitpiotr.rental.views.RootController">
-   <bottom>
-      <ButtonBar prefHeight="40.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-        <buttons>
-            <Button mnemonicParsing="false" onAction="#handleEdit" text="Edytuj" />
-            <Button mnemonicParsing="false" onAction="#handleNew" text="Nowy" />
-        </buttons>
-         <BorderPane.margin>
-            <Insets right="10.0" />
-         </BorderPane.margin>
-      </ButtonBar>
-   </bottom>
+<BorderPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kwitpiotr.rental.views.RootController">
    <left>
       <TabPane prefHeight="400.0" prefWidth="250.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
@@ -53,7 +43,7 @@
                   </AnchorPane>
             </content>
           </Tab>
-            <Tab text="Historia wypożyczeń">
+            <Tab onSelectionChanged="#selectRentTab" text="Historia wypożyczeń">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -81,4 +71,16 @@
             <Insets />
          </BorderPane.margin></AnchorPane>
    </center>
+   <bottom>
+      <ButtonBar prefHeight="40.0" prefWidth="463.0" BorderPane.alignment="CENTER">
+        <buttons>
+            <RadioButton mnemonicParsing="false" text="Pokaż tylko dostępne filmy" translateX="-300.0" />
+            <Button maxWidth="40.0" mnemonicParsing="false" onAction="#handleEdit" text="Edytuj" translateX="-10.0" />
+            <Button maxWidth="0.0" mnemonicParsing="false" onAction="#handleNew" prefHeight="0.0" text="Nowy" translateX="-10.0" />
+        </buttons>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+      </ButtonBar>
+   </bottom>
 </BorderPane>

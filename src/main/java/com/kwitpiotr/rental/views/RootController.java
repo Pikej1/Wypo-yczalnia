@@ -5,11 +5,16 @@ import java.time.LocalDate;
 import com.kwitpiotr.rental.MainApp;
 import com.kwitpiotr.rental.model.*;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Toggle;
+import javafx.scene.control.ToggleGroup;
 
 public class RootController {
 	
@@ -40,6 +45,9 @@ public class RootController {
 	@FXML
 	private TableColumn<Rent, LocalDate> startDateColumn;
 	
+	@FXML
+	private RadioButton firstRadioButton;
+
 	private int selectedTab;
 	
 	/**
@@ -66,12 +74,14 @@ public class RootController {
 		
 		showMovieDetails(null);
 		showClientDetails(null);
+		showRentDetails(null);
+		
 		movieTable.getSelectionModel().selectedItemProperty().addListener(
 				(observable, oldValue, newValue) -> showMovieDetails(newValue));
 		clientTable.getSelectionModel().selectedItemProperty().addListener(
 				(observable, oldValue, newValue) -> showClientDetails(newValue));
 		rentTable.getSelectionModel().selectedItemProperty().addListener(
-				(observable, oldValue, newValue) -> showRentDetails(newValue));	
+				(observable, oldValue, newValue) -> showRentDetails(newValue));
 	}
 	
 	@FXML
@@ -150,6 +160,25 @@ public class RootController {
 	}
 	
 	@FXML
+	private void handleEditRent(){
+		Rent selectedRent = rentTable.getSelectionModel().getSelectedItem();
+		if(selectedRent != null){
+			boolean okClicked = mainApp.showRentEditDialog(selectedRent);
+			if(okClicked){
+				showRentDetails(selectedRent);
+			}
+		}else{
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.initOwner(mainApp.getPrimaryStage());
+			alert.setTitle("Nie wybrano żadnej pozycji z listy");
+			alert.setHeaderText("Nie wybrano wypożyczenia");
+			alert.setContentText("Wybierz transakcję z tabeli 'Historia wypożyczeń'.");
+			
+			alert.showAndWait();
+		}
+	}
+	
+	@FXML
 	private void handleNew(){
 		switch(selectedTab){
 			case 1:
@@ -164,7 +193,8 @@ public class RootController {
 		}
 	}
 	
-	@FXML void handleEdit(){
+	@FXML 
+	void handleEdit(){
 		switch(selectedTab){
 		case 1:
 			handleEditMovie();
@@ -173,7 +203,7 @@ public class RootController {
 			handleEditCliet();
 			break;
 		case 3:
-			handleNewMovie();
+			handleEditRent();
 			break;
 		}
 	}
@@ -207,6 +237,10 @@ public class RootController {
 	@FXML
 	private void selectRentTab(){
 		selectedTab = 3;
+	}
+	@FXML
+	private void getAvaiableOnly(){
+		
 	}
 	
 	public void setMainApp(MainApp mainApp){

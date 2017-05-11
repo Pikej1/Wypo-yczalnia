@@ -10,6 +10,7 @@ import com.kwitpiotr.rental.views.ClientEditDialogController;
 import com.kwitpiotr.rental.views.MovieDetailsController;
 import com.kwitpiotr.rental.views.MovieEditDialogController;
 import com.kwitpiotr.rental.views.RentDetailsController;
+import com.kwitpiotr.rental.views.RentEditDialogController;
 import com.kwitpiotr.rental.views.RootController;
 
 import javafx.application.Application;
@@ -49,6 +50,28 @@ public class MainApp extends Application {
     	rentRep.add(new Rent(movieRep.getRepository().get(0), clientRep.get(1)));
     	rentRep.add(new Rent(movieRep.getRepository().get(1), clientRep.get(0)));
     	rentRep.get(0).returnItem();
+	}
+	
+	private void initMainLayout() {
+		try{
+			//Loading MainLayout.fxml
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(MainApp.class.getResource("views/RootLayout.fxml"));
+			rootLayout = (BorderPane) loader.load();
+			
+			//Controller
+			RootController controller = loader.getController();
+			controller.setMainApp(this);
+
+			
+			//Showing the scene with the layout
+			Scene scene = new Scene(rootLayout);
+			primaryStage.setScene(scene);
+			primaryStage.show();
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+		
 	}
 
 	@Override
@@ -177,26 +200,32 @@ public class MainApp extends Application {
 		}
 	}
 	
-	private void initMainLayout() {
+	public boolean showRentEditDialog(Rent rent){
 		try{
-			//Loading MainLayout.fxml
+			//Loading .fxml and creating new stage (for popping window)
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(MainApp.class.getResource("views/RootLayout.fxml"));
-			rootLayout = (BorderPane) loader.load();
+			loader.setLocation(MainApp.class.getResource("views/RentEditDialog.fxml"));
+			Pane window = (Pane) loader.load();
 			
-			//Controller
-			RootController controller = loader.getController();
-			controller.setMainApp(this);
-
-			
-			//Showing the scene with the layout
-			Scene scene = new Scene(rootLayout);
-			primaryStage.setScene(scene);
-			primaryStage.show();
+			//Creating dialog Stage
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Zwrot filmu");
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+	        dialogStage.initOwner(primaryStage);
+	        Scene scene = new Scene(window);
+	        dialogStage.setScene(scene);
+	        
+	        //Set client in controller
+	        RentEditDialogController controller = loader.getController();
+	        controller.setDialogStage(dialogStage);
+	        controller.setRent(rent);
+	        
+	        dialogStage.showAndWait();
+	        return controller.isConfirmed();
 		}catch(IOException e){
 			e.printStackTrace();
+			return false;
 		}
-		
 	}
 	
 	public Stage getPrimaryStage(){
