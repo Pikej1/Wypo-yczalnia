@@ -22,7 +22,7 @@
                         <TableView fx:id="movieTable" prefHeight="371.0" prefWidth="213.0" AnchorPane.bottomAnchor="-2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <columns>
                             <TableColumn fx:id="titleColumn" prefWidth="159.0" text="Tytuł" />
-                            <TableColumn fx:id="availableColumn" prefWidth="90.0" text="Gatunek" />
+                            <TableColumn fx:id="genreColumn" prefWidth="90.0" text="Gatunek" />
                           </columns>
                         </TableView>
                      </children>

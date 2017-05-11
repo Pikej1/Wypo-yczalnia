@@ -14,9 +14,13 @@ public class Rent {
 	private final ObjectProperty<LocalDate> endDate;
 	private final BooleanProperty returned;
 	
+	public Rent(){
+		this(null, null);
+	}
+	
 	public Rent(Movie movie, Client client){
 		this.movie = new SimpleObjectProperty<Movie>(movie);
-		movie.setRented(true);
+		if(movie != null) movie.setRented(true);
 		this.client = new SimpleObjectProperty<Client>(client);
 		this.startDate = new SimpleObjectProperty<LocalDate>(LocalDate.now());
 		this.endDate = new SimpleObjectProperty<LocalDate>(null);

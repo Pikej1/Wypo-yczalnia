@@ -9,6 +9,7 @@ import com.kwitpiotr.rental.views.ClientDetailsController;
 import com.kwitpiotr.rental.views.ClientEditDialogController;
 import com.kwitpiotr.rental.views.MovieDetailsController;
 import com.kwitpiotr.rental.views.MovieEditDialogController;
+import com.kwitpiotr.rental.views.RentAddNewDialogController;
 import com.kwitpiotr.rental.views.RentDetailsController;
 import com.kwitpiotr.rental.views.RentEditDialogController;
 import com.kwitpiotr.rental.views.RootController;
@@ -217,6 +218,35 @@ public class MainApp extends Application {
 	        
 	        //Set client in controller
 	        RentEditDialogController controller = loader.getController();
+	        controller.setDialogStage(dialogStage);
+	        controller.setRent(rent);
+	        
+	        dialogStage.showAndWait();
+	        return controller.isConfirmed();
+		}catch(IOException e){
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	public boolean showRentAddNewDialog(Rent rent){
+		try{
+			//Loading .fxml and creating new stage (for popping window)
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(MainApp.class.getResource("views/RentAddNewDialog.fxml"));
+			Pane window = (Pane) loader.load();
+			
+			//Creating dialog Stage
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Wypożycz film");
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+	        dialogStage.initOwner(primaryStage);
+	        Scene scene = new Scene(window);
+	        dialogStage.setScene(scene);
+	        
+	        //Set client in controller
+	        RentAddNewDialogController controller = loader.getController();
+	        controller.setRepository(this);
 	        controller.setDialogStage(dialogStage);
 	        controller.setRent(rent);
 	        

@@ -5,16 +5,12 @@ import java.time.LocalDate;
 import com.kwitpiotr.rental.MainApp;
 import com.kwitpiotr.rental.model.*;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.Toggle;
-import javafx.scene.control.ToggleGroup;
 
 public class RootController {
 	
@@ -23,7 +19,7 @@ public class RootController {
 	@FXML
 	private TableColumn<Movie, String> titleColumn;
 	@FXML
-	private TableColumn<Movie, String> availableColumn;
+	private TableColumn<Movie, String> genreColumn;
 	
 	@FXML
 	private TableView<Client> clientTable;
@@ -60,7 +56,7 @@ public class RootController {
 		selectedTab = 1;
 		
 		titleColumn.setCellValueFactory(cellData -> cellData.getValue().titleProperty());
-		availableColumn.setCellValueFactory(cellData -> cellData.getValue().genreProperty());
+		genreColumn.setCellValueFactory(cellData -> cellData.getValue().genreProperty());
 		
 		nameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
 		lastNameColumn.setCellValueFactory(cellData -> cellData.getValue().lastNameProperty());
@@ -82,22 +78,6 @@ public class RootController {
 				(observable, oldValue, newValue) -> showClientDetails(newValue));
 		rentTable.getSelectionModel().selectedItemProperty().addListener(
 				(observable, oldValue, newValue) -> showRentDetails(newValue));
-	}
-	
-	@FXML
-	private void handleDeleteClient(){
-		int selectedIndex = clientTable.getSelectionModel().getSelectedIndex();
-		if(selectedIndex >= 0){
-			clientTable.getItems().remove(selectedIndex);
-		}else{
-			Alert alert = new Alert(AlertType.WARNING);
-	        alert.initOwner(mainApp.getPrimaryStage());
-	        alert.setTitle("Nie wybrano żadnej pozycji z listy");
-			alert.setHeaderText("Nie wybrano klienta");
-			alert.setContentText("Wybierz klienta z tabeli 'Klienci'.");
-
-	        alert.showAndWait();
-	    }
 	}
 	
 	/**
@@ -178,6 +158,15 @@ public class RootController {
 		}
 	}
 	
+	private void handleNewRent(){
+		Rent newRent = new Rent();
+		boolean okClicked = mainApp.showRentAddNewDialog(newRent);
+		if(okClicked){
+			mainApp.getRentRep().add(newRent);
+		}
+		
+	}
+	
 	@FXML
 	private void handleNew(){
 		switch(selectedTab){
@@ -188,7 +177,7 @@ public class RootController {
 				handleNewClient();
 				break;
 			case 3:
-				handleNewMovie();
+				handleNewRent();
 				break;
 		}
 	}
